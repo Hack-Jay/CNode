@@ -7,6 +7,9 @@ module.exports = {
 		// 路径前缀，用来区分
 		publicPath: '/public/'
   },
+  resolve: {
+    extensions: [".js", ".jsx"]
+  },
   module: {
 		rules: [
 			{

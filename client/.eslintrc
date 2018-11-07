@@ -7,11 +7,11 @@
   },
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": { "legacyDecorators": true }
   },
   "extends": "airbnb",
   "rules": {
-    "comma-dangle": ["error", "never"],
     "semi": [0],
     "react-jsx-filename-extension": [0],
     "jsx-ally/achor-is-valid": [0],
@@ -19,6 +19,11 @@
     "arrow-body-style": [0],
     "no-param-reasign": [0],
     "react/jsx-filename-extension": [0],
-    "global-require": [0]
+    "global-require": [0],
+    "no-console": [0],
+    "import/no-named-as-default-member": [0],
+    "import/no-named-as-default": [0],
+    "react/prop-types": [0],
+    "react/destructuring-assignment": [0]
   }
 }
