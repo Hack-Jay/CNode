@@ -11,11 +11,14 @@
   },
   "extends": "airbnb",
   "rules": {
+    "comma-dangle": ["error", "never"],
     "semi": [0],
     "react-jsx-filename-extension": [0],
     "jsx-ally/achor-is-valid": [0],
     "react/require-default-props": [0],
     "arrow-body-style": [0],
-    "no-param-reasign": [0]
+    "no-param-reasign": [0],
+    "react/jsx-filename-extension": [0],
+    "global-require": [0]
   }
 }

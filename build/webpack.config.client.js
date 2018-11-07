@@ -1,9 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
 const HTMLPlugin = require('html-webpack-plugin')
+const merge = require('webpack-merge')
+const baseConfig = require('./webpack.config.base')
 
 const isDev =  process.env.NODE_ENV === 'development'
-const config = {
+const config = merge(baseConfig, {
 	// webpack 4 要求增加
 	mode: 'development',
 	entry: {
@@ -11,39 +13,15 @@ const config = {
 	},
 	output: {
 		filename: '[name].[hash].js',
-		path: path.join(__dirname, '../dist'),
-		// 路径前缀，用来区分
-		publicPath: '/public/'
-	},
-	module: {
-		rules: [
-			{
-				enforce: 'pre',
-				test: /.(js|jsx)$/ ,
-				loader: 'eslint-loader',
-				exclude: [
-					path.join(__dirname, '../node_modules')
-				]
-			},
-			{
-				test: /.jsx$/,
-				loader: 'babel-loader'
-			},
-			{
-				test: /.js$/,
-				loader: 'babel-loader',
-				exclude: [
-					path.join(__dirname, '../node_modules')
-				]
-			}
-		]
+
 	},
 	plugins: [
 		new HTMLPlugin({
 			template: path.join(__dirname, '../client/template.html')
 		})
 	]
-}
+})
+
 if(isDev) {
 	config.entry = {
 		app: [

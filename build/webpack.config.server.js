@@ -1,6 +1,8 @@
 const path = require('path')
+const merge = require('webpack-merge')
+const baseConfig = require('./webpack.config.base')
 
-module.exports = {
+module.exports = merge(baseConfig, {
 	target: 'node',
 	// webpack 4 要求增加
 	mode: 'development',
@@ -9,9 +11,6 @@ module.exports = {
 	},
 	output: {
 		filename: 'server.entry.js',
-		path: path.join(__dirname, '../dist'),
-		// 路径前缀，用来区分
-		publicPath: '/public',
 		libraryTarget: 'commonjs2'
 	},
 	module: {
@@ -28,4 +27,4 @@ module.exports = {
 			}
 		]
 	}
-}
+})
