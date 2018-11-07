@@ -2,7 +2,6 @@ import {
   observable,
   computed,
   action,
-  autorun,
 } from 'mobx'
 
 export class AppState {
@@ -24,10 +23,6 @@ export class AppState {
 }
 
 const appState = new AppState()
-
-autorun(() => {
-  console.log(appState.msg)
-})
 
 setInterval(() => {
   appState.add()
