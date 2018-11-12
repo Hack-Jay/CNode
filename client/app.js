@@ -5,15 +5,16 @@ import { Provider } from 'mobx-react'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './views/App'
-import appState from './store/app.state'
+import AppState from './store/app.state'
 
+const initialState = window.__INITIAL__STATE__ || {} // eslint-disable-line
 const root = document.getElementById('root')
 
 const render = (Comp) => {
   const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
   renderMethod(
     <AppContainer>
-      <Provider appState={appState}>
+      <Provider appState={new AppState(initialState.appState)}>
         <BrowserRouter>
           <Comp />
         </BrowserRouter>

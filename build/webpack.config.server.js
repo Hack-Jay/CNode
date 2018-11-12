@@ -12,7 +12,8 @@ module.exports = merge(baseConfig, {
 	output: {
 		filename: 'server.entry.js',
 		libraryTarget: 'commonjs2'
-	},
+  },
+  externals:Object.keys(require('../package.json').dependencies),
 	module: {
 		rules: [{
 				test: /.jsx$/,
