@@ -5,6 +5,7 @@ import {
 } from 'mobx-react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+import Button from '@material-ui/core/Button'
 import { AppState } from '../../store/store'
 
 @inject('appState') @observer
@@ -40,6 +41,7 @@ export default class TopicList extends React.Component {
           <title>This is the topic title ... </title>
           <meta name="description" content="This is description" />
         </Helmet>
+        <Button variant="outlined" color="primary">This is topic click</Button>
         <input type="text" onChange={this.handleChange} />
         <br />
         {this.props.appState.msg}

@@ -4,6 +4,12 @@ const asyncBootstrap = require('react-async-bootstrapper').default
 const ReactDomServer = require('react-dom/server')
 const Helmet = require('react-helmet').default
 
+const SheetsRegistry = require('jss').SheetsRegistry
+// const JssProvider = require('react-jss/lib/JssProvider');
+const createMuiTheme = require('@material-ui/core/styles').createMuiTheme
+const createGenerateClassName = require('@material-ui/core/styles').createGenerateClassName
+const color = require('@material-ui/core/colors')
+
 const getStoreState = (store) => {
   return Object.keys(store).reduce((result, storeName) => {
     // class mobx.toJson()
@@ -18,10 +24,21 @@ module.exports = (bundle, template, req, res) => {
     const serverBundle = bundle.default
 
     const routerContext = {}
-    console.log('createStoreMap', createStoreMap)
+    // console.log('createStoreMap', createStoreMap)
     const stores = createStoreMap()
+    const sheetsRegistry = new SheetsRegistry()
+    const sheetsManager = new Map()
+    const generateClassName = createGenerateClassName()
+    const theme = createMuiTheme({
+      palette: {
+        primary: color.green,
+        accent: color.red,
+        type: 'light'
+      }
+    })
+
     // 打包后的serverEntry是一个函数
-    const app = serverBundle(stores, routerContext, req.url)
+    const app = serverBundle(stores, routerContext, sheetsRegistry, theme, generateClassName, sheetsManager, req.url)
 
     asyncBootstrap(app).then(() => {
       if (routerContext.url) {
@@ -40,6 +57,7 @@ module.exports = (bundle, template, req, res) => {
         meta: helmet.meta.toString(),
         style: helmet.style.toString(),
         link: helmet.link.toString(),
+        materialCss: sheetsRegistry.toString()
       })
       res.send(html)
       resolve()

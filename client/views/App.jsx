@@ -1,8 +1,6 @@
 import React from 'react'
-import {
-  Link,
-} from 'react-router-dom'
 import Routes from '../config/router'
+import AppBar from './components/app-bar'
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -11,11 +9,7 @@ export default class App extends React.Component {
 
   render() {
     return [
-      <div key="banner">
-        <Link to="/">Home</Link>
-        <br />
-        <Link to="/detail">Detail</Link>
-      </div>,
+      <AppBar />,
       <Routes key="routes" />,
     ]
   }

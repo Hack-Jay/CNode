@@ -23,7 +23,7 @@ const vm = require('vm')
 
 const getModuleFromString = (bundle, filename) => {
   const m = { exports: {} }
-  // `(function(exports, require, module, __finename, __dirname){ ...bundle code })`
+  // `(function(exports, require, module, __filename, __dirname){ ...bundle code })`
   // ^
   // ||  包装成可定制的模式
   const warpper = NativeModule.wrap(bundle)
@@ -43,6 +43,7 @@ const mfs = new MemoryFs
 const serverCompiler = webpack(serverConfig)
 serverCompiler.outputFileSystem = mfs
 let serverBundle
+// 监听server的打包目录
 serverCompiler.watch({}, (err, status) => {
   if(err) throw err
   status = status.toJson()
