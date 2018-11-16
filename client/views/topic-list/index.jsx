@@ -5,14 +5,22 @@ import {
 } from 'mobx-react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import Button from '@material-ui/core/Button'
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
 import { AppState } from '../../store/store'
+import Container from '../components/container'
+import TopicItem from './list-item'
 
 @inject('appState') @observer
 export default class TopicList extends React.Component {
   constructor() {
     super()
-    this.handleChange = this.handleChange.bind(this)
+    this.state = {
+      tabIndex: 0,
+    }
+    this.handleChangeIndex = this.handleChangeIndex.bind(this)
+    this.listItemClick = this.listItemClick.bind(this)
   }
 
   componentDidMount() {
@@ -29,23 +37,45 @@ export default class TopicList extends React.Component {
     })
   }
 
-
-  handleChange(e) {
-    this.props.appState.changeName(e.target.value)
+  handleChangeIndex(e, index) {
+    console.log(index)
+    this.setState({
+      tabIndex: index,
+    })
   }
 
+  /* eslint-disable */
+  listItemClick() {
+  }
+  /* eslint-enable */
+
+
   render() {
+    const { tabIndex } = this.state
+    const topic = {
+      title: 'This is Title ...',
+      userName: 'ZZZz',
+      reply_count: 20,
+      visit_count: 30,
+      tab: 'share',
+      creat_at: 'asdaeqwqda',
+    }
     return (
-      <div>
+      <Container>
         <Helmet>
           <title>This is the topic title ... </title>
           <meta name="description" content="This is description" />
         </Helmet>
-        <Button variant="outlined" color="primary">This is topic click</Button>
-        <input type="text" onChange={this.handleChange} />
-        <br />
-        {this.props.appState.msg}
-      </div>
+        <Tabs value={tabIndex} onChange={this.handleChangeIndex}>
+          <Tab label="全部" />
+          <Tab label="精华" />
+          <Tab label="分享" />
+          <Tab label="问答" />
+          <Tab label="招聘" />
+          <Tab label="客户端测试" />
+        </Tabs>
+        <TopicItem onClick={this.listItemClick} topic={topic} />
+      </Container>
     )
   }
 }

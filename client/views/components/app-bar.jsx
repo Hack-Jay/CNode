@@ -6,11 +6,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
 
 const styles = {
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
+    width: '100%',
+  },
+  flex: {
+    flex: 1,
   },
   grow: {
     flexGrow: 1,
@@ -25,15 +29,16 @@ function ButtonAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
+            <HomeIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            News
+          <Typography variant="h6" color="inherit" className={classes.flex}>
+            CNode
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="contrast">新建话题</Button>
+          <Button variant="outlined" color="contrast">Login</Button>
         </Toolbar>
       </AppBar>
     </div>

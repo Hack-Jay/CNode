@@ -24,7 +24,7 @@ module.exports = (bundle, template, req, res) => {
     const serverBundle = bundle.default
 
     const routerContext = {}
-    // console.log('createStoreMap', createStoreMap)
+    console.log('createStoreMap', createStoreMap)
     const stores = createStoreMap()
     const sheetsRegistry = new SheetsRegistry()
     const sheetsManager = new Map()

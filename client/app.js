@@ -24,6 +24,11 @@ const createApp = (Comp) => {
       }
     }
 
+    componentDidCatch(error, info) {
+      console.error(error);
+      console.log(info)
+    }
+
     render() {
       return <Comp />
     }
@@ -34,7 +39,7 @@ const createApp = (Comp) => {
 const theme = createMuiTheme({
   palette: {
     primary: lightBlue,
-    accept: pink,
+    accent: pink,
     type: 'light',
   },
 })
