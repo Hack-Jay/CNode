@@ -53,7 +53,7 @@ export default class TopicList extends React.Component {
   render() {
     const { tabIndex } = this.state
     const topic = {
-      title: 'This is Title ...',
+      title: 'This is Title .',
       userName: 'ZZZz',
       reply_count: 20,
       visit_count: 30,
