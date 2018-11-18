@@ -46,7 +46,7 @@ if (isDev) {
       index: '/public/index.html'
     },
     proxy: {
-      'api': 'http://localhost:3000'
+      '/api': 'http://localhost:3000'
     }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())

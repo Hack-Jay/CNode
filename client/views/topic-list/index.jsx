@@ -7,12 +7,20 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import List from '@material-ui/core/List';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { AppState } from '../../store/store'
+import { AppState, TopicStore } from '../../store/store'
 import Container from '../components/container'
 import TopicItem from './list-item'
 
-@inject('appState') @observer
+@inject((stores) => {
+  return {
+    topicStore: stores.topicStore,
+    appState: stores.appState,
+    user: stores.appState.user,
+  }
+}) @observer
 export default class TopicList extends React.Component {
   constructor() {
     super()
@@ -24,7 +32,7 @@ export default class TopicList extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('this.porps:', this.props)
+    this.props.topicStore.fetchTopics()
   }
 
   asyncBootstrap() {
@@ -52,14 +60,9 @@ export default class TopicList extends React.Component {
 
   render() {
     const { tabIndex } = this.state
-    const topic = {
-      title: 'This is Title .',
-      userName: 'ZZZz',
-      reply_count: 20,
-      visit_count: 30,
-      tab: 'share',
-      creat_at: 'asdaeqwqda',
-    }
+    const { topics, syncing } = this.props.topicStore
+    console.log('topicList', topics, syncing)
+
     return (
       <Container>
         <Helmet>
@@ -74,10 +77,31 @@ export default class TopicList extends React.Component {
           <Tab label="招聘" />
           <Tab label="客户端测试" />
         </Tabs>
-        <TopicItem onClick={this.listItemClick} topic={topic} />
+        <List>
+          {
+            topics.map(topic => (
+              <TopicItem
+                key={topic.id}
+                onClick={this.listItemClick}
+                topic={topic}
+              />
+            ))
+          }
+        </List>
+        {
+          syncing ? (
+            <div style={{ display: 'flex', justifyContent: 'space-around', padding: '40px 0' }}>
+              <CircularProgress />
+            </div>
+          ) : null
+        }
       </Container>
     )
   }
+}
+
+TopicList.wrappedComponent.proTypes = {
+  topicStore: PropTypes.instanceOf(TopicStore).isRequired,
 }
 
 TopicList.propTypes = {
