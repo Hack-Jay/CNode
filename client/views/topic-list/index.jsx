@@ -9,10 +9,12 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import List from '@material-ui/core/List';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import queryString from 'query-string'
 
 import { AppState, TopicStore } from '../../store/store'
 import Container from '../components/container'
 import TopicItem from './list-item'
+import { tabs } from '../../util/variable-define'
 
 @inject((stores) => {
   return {
@@ -22,17 +24,31 @@ import TopicItem from './list-item'
   }
 }) @observer
 export default class TopicList extends React.Component {
+  static contextTypes = {
+    router: PropTypes.object,
+  }
+
   constructor() {
     super()
-    this.state = {
-      tabIndex: 0,
-    }
     this.handleChangeIndex = this.handleChangeIndex.bind(this)
     this.listItemClick = this.listItemClick.bind(this)
   }
 
   componentDidMount() {
-    this.props.topicStore.fetchTopics()
+    const tab = this.getTab()
+    this.props.topicStore.fetchTopics(tab)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.search !== this.props.location.search) {
+      this.props.topicStore.fetchTopics(this.getTab(nextProps.location.search))
+    }
+  }
+
+  getTab(search) {
+    search = search || this.props.location.search
+    const query = queryString.parse(search)
+    return query.tab || 'all'
   }
 
   asyncBootstrap() {
@@ -45,10 +61,11 @@ export default class TopicList extends React.Component {
     })
   }
 
-  handleChangeIndex(e, index) {
-    console.log(index)
-    this.setState({
-      tabIndex: index,
+  handleChangeIndex(e, value) {
+    // change route here
+    this.context.router.history.push({
+      pathname: '/index',
+      search: `?tab=${value}`,
     })
   }
 
@@ -57,11 +74,9 @@ export default class TopicList extends React.Component {
   }
   /* eslint-enable */
 
-
   render() {
-    const { tabIndex } = this.state
     const { topics, syncing } = this.props.topicStore
-    console.log('topicList', topics, syncing)
+    const tab = this.getTab()
 
     return (
       <Container>
@@ -69,13 +84,10 @@ export default class TopicList extends React.Component {
           <title>This is the topic title ... </title>
           <meta name="description" content="This is description" />
         </Helmet>
-        <Tabs value={tabIndex} onChange={this.handleChangeIndex}>
-          <Tab label="全部" />
-          <Tab label="精华" />
-          <Tab label="分享" />
-          <Tab label="问答" />
-          <Tab label="招聘" />
-          <Tab label="客户端测试" />
+        <Tabs value={tab} onChange={this.handleChangeIndex}>
+          {
+            Object.keys(tabs).map(t => <Tab label={tabs[t]} key={t} value={t} />)
+          }
         </Tabs>
         <List>
           {
@@ -106,4 +118,5 @@ TopicList.wrappedComponent.proTypes = {
 
 TopicList.propTypes = {
   appState: PropTypes.instanceOf(AppState),
+  location: PropTypes.object.isRequired,
 }

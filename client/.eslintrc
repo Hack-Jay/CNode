@@ -12,6 +12,7 @@
   },
   "extends": "airbnb",
   "rules": {
+    "linebreak-style": 0,
     "semi": [0],
     "react-jsx-filename-extension": [0],
     "jsx-ally/achor-is-valid": [0],

@@ -12,11 +12,9 @@ const parseUrl = (url, params) => {
 }
 
 export const get = (url, params) => {
-  console.log('comming')
   return new Promise((resolve, reject) => {
     axios.get(parseUrl(url, params))
       .then((resp) => {
-        console.log('axios', resp)
         resolve(resp.data)
       }).catch(reject)
   })

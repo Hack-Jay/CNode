@@ -4,22 +4,29 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import { withStyles } from '@material-ui/core/styles';
+import cx from 'classnames'
 
 import Avatar from '@material-ui/core/Avatar';
 import ProTypes from 'prop-types'
 
 import { topicPrimaryStyle, topicSecondStyle } from './style'
+import { tabs } from '../../util/variable-define'
 
-
-const Primary = ({ classes, topic }) => (
-  <div className={classes.root}>
-    <span className={classes.tab}>{topic.tab}</span>
-    <span className={classes.title}>{topic.title}</span>
-  </div>
-)
+const Primary = ({ classes, topic }) => {
+  const classNames = cx({
+    [classes.tab]: true,
+    [classes.top]: topic.top,
+  })
+  return (
+    <span className={classes.root}>
+      <span className={classNames}>{topic.top ? '置顶' : tabs[topic.tab]}</span>
+      <span className={classes.title}>{topic.title}</span>
+    </span>
+  )
+}
 
 const Secondary = ({ classes, topic }) => (
-  <div className={classes.root}>
+  <span className={classes.root}>
     <span className={classes.userName}>{topic.author.loginname}</span>
     <span className={classes.count}>
       <span className={classes.accentColor}>{topic.reply_count}</span>
@@ -30,7 +37,7 @@ const Secondary = ({ classes, topic }) => (
       创建时间：
       {topic.create_at}
     </span>
-  </div>
+  </span>
 )
 
 Primary.proTypes = {
