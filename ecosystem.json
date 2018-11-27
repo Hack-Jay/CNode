@@ -10,7 +10,7 @@
   "deploy": {
     "production": {
       "user": "root",
-      "host": "zlingling",
+      "host": ["132.232.62.237"],
       "repo": "git@github.com:Hack-Jay/CNode.git",
       "ref": "origin/develop-react=realize",
       "path": "/root/CNode",
