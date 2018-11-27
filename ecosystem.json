@@ -13,7 +13,7 @@
       "host": ["132.232.62.237"],
       "repo": "git@github.com:Hack-Jay/CNode.git",
       "ref": "origin/develop-react=realize",
-      "path": "/root/CNode",
+      "path": "/root/deploy/cnode",
       "post-deploy": "npm install && npm run build && pm2 startOrRestart ecosystem.json --env production"
     }
   }
