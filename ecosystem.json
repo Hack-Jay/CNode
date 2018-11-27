@@ -1,20 +1,18 @@
 {
-  "apps": [
-    {
-      "name": "cnode",
-      "script": "./server/server.js",
-      "env_production": {
-        "NODE_ENV": "production",
-        "HOST": "localhost"
-      }
+  "apps": [{
+    "name": "cnode",
+    "script": "./server/server.js",
+    "env_production": {
+      "NODE_ENV": "production",
+      "HOST": "localhost"
     }
-  ],
+  }],
   "deploy": {
     "production": {
       "user": "root",
       "host": "zlingling",
       "repo": "git@github.com:Hack-Jay/CNode.git",
-      "ref": "origin/develop-react-realize",
+      "ref": "origin/develop-react=realize",
       "path": "/root/CNode",
       "post-deploy": "npm install && npm run build && pm2 startOrRestart ecosystem.json --env production"
     }
