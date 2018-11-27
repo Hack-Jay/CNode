@@ -11,7 +11,7 @@ import List from '@material-ui/core/List';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import queryString from 'query-string'
 
-import { AppState, TopicStore } from '../../store/store'
+import { TopicStore } from '../../store/store'
 import Container from '../components/container'
 import TopicItem from './list-item'
 import { tabs } from '../../util/variable-define'
@@ -52,12 +52,14 @@ export default class TopicList extends React.Component {
   }
 
   asyncBootstrap() {
-    console.log('server rendering data')
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.props.appState.count = 3
-        resolve(true)
-      })
+    console.log('111')
+    const query = queryString.parse(this.props.location.search)
+    const tab = query.tab
+    return this.props.topicStore.fetchTopics(tab || 'all').then(() => {
+      return true
+    }).catch(() => {
+      // console.log(err)
+      return false
     })
   }
 
@@ -71,7 +73,7 @@ export default class TopicList extends React.Component {
 
   /* eslint-disable */
   listItemClick() {
-    console.log('topic:', 1)
+    // console.log('topic:', 1)
     // this.context.router.history.push(`/detail/${topic.id}`)
   }
   /* eslint-enable */
@@ -119,6 +121,6 @@ TopicList.wrappedComponent.proTypes = {
 }
 
 TopicList.propTypes = {
-  appState: PropTypes.instanceOf(AppState),
+  // appState: PropTypes.instanceOf(AppState),
   location: PropTypes.object.isRequired,
 }
